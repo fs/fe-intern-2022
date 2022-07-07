@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn format && git -A ."
+    }
   },
   "dependencies": {
     "next": "12.2.0",
@@ -15,6 +22,11 @@
   },
   "devDependencies": {
     "eslint": "8.19.0",
-    "eslint-config-next": "12.2.0"
+    "eslint-config-next": "12.2.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "husky": "^8.0.0",
+    "prettier": "^2.7.1"
   }
 }
