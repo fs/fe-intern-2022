@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "echo \"no tests\""
   },
   "husky": {
     "hooks": {
