@@ -4,10 +4,11 @@
     "es2021": true
   },
   "extends": [
+    "next",
+    "plugin:react/recommended",
     "eslint:recommended",
     "prettier",
     "prettier/react",
-    "plugin:react/recommended",
     "airbnb"
   ],
   "parserOptions": {
