@@ -11,7 +11,7 @@ ___
 
 ---
 ### Link 
-###### https://fs.github.io/fe-intern-2022/🔥
+###### https://fs.github.io/fe-intern-2022/
 ---
 ## Stack
 
