@@ -16,7 +16,9 @@ export default function Home() {
 
   return (
     <>
-      <h1>pokemon count: {pokemons.count}</h1>
+      {Object.keys(pokemons).map(pokemon => {
+        return <h1>{pokemon.results}</h1>
+      })}
     </>
   )
 }
