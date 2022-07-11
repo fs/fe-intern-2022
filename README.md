@@ -1,7 +1,5 @@
 # Who's that pokemon?
 
-##### next-js-app
-
 ---
 
 ## Installation
@@ -14,7 +12,7 @@
 
 ### Link
 
-###### https://spectacular-gumption-923fda.netlify.app
+https://spectacular-gumption-923fda.netlify.app
 
 ---
 
@@ -28,7 +26,7 @@
 
 ## About
 
-###### This application is based on Next.js using the free open API [Link](https://pokeapi.co/)
+This application is based on Next.js using the free open API [Link](https://pokeapi.co/)
 
 <img src="https://pokeapi.co/static/pokeapi_256.3fa72200.png" width="100">
 
