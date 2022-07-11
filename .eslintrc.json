@@ -7,9 +7,7 @@
     "next",
     "plugin:react/recommended",
     "eslint:recommended",
-    "prettier",
-    "prettier/react",
-    "airbnb"
+    "prettier"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -19,5 +17,8 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
-  "rules": { "prettier/prettier": "warn" }
+  "rules": {
+    "prettier/prettier": "warn",
+    "react/react-in-jsx-scope": "off"
+  }
 }
