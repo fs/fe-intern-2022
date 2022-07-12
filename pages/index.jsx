@@ -1,22 +1,30 @@
 function Poke({ pokes }) {
-  let pokeNames = Object.entries(pokes)
+  let pokeAll = Object.entries(pokes)
+  let pokeInfo = []
+  pokeAll[3][1].map(names => pokeInfo.push(names))
+
+  let pokeNames = pokeInfo.map(a => a.name)
+
   return (
-    <ul>
-      <h1>Poke count{pokes.count}</h1>
+    <>
       <h1>Poke Names</h1>
       <ul>
-        {pokeNames[3][1].map(pokeName => (
-          <li key={pokeName.name}>{pokeName.name}</li>
+        {pokeNames.map(pokeName => (
+          <li key={pokeName.id}>{pokeName}</li>
         ))}
       </ul>
-    </ul>
+    </>
   )
 }
 
-export async function getStaticProps() {
-  const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon?limit=100&offset=${randomNum(0, 1154)}`
-  )
+const getRandomNum = (min, max) => {
+  let rand = min - 0.5 + Math.random() * (max - min + 1)
+  return Math.round(rand)
+}
+
+export const getServerSideProps = async () => {
+  const url = `${process.env.API_URL}?limit=100&offset${getRandomNum(0, 1154)}`
+  const res = await fetch(url)
   const pokes = await res.json()
 
   return {
@@ -24,10 +32,6 @@ export async function getStaticProps() {
       pokes,
     },
   }
-}
-function randomNum(min, max) {
-  let rand = min - 0.5 + Math.random() * (max - min + 1)
-  return Math.round(rand)
 }
 
 export default Poke
