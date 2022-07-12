@@ -1,4 +1,4 @@
-const PokemonTypeColor = {
+export const PokemonTypeColor = {
   rock: '#B69E31',
   ghost: '#70559B',
   steel: '#B7B9D0',
