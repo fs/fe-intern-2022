@@ -6,9 +6,6 @@ export const darkTheme = {
   secondaryColor: '#FFB830',
   backgroundColor: '#0F182E',
 }
-export const TextColors = {
-  gray500: '#ADB9C7',
-}
 
 const GlobalTheme = createGlobalStyle`
   * {
