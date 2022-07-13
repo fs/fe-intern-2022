@@ -4,7 +4,7 @@
 // }
 
 export const getServerSideProps = async () => {
-  const url = `${process.env.API_URL}?limit=100&offset=0}`
+  const url = `${process.env.API_URL}?limit=10&offset=0}`
   const res = await fetch(url)
   const pokes = await res.json()
 
@@ -14,30 +14,35 @@ export const getServerSideProps = async () => {
   const randomPokemon = results[randomNum]
   const resPoke = await fetch(randomPokemon.url)
   const randomPokeObj = await resPoke.json()
-  console.log(randomPokeObj)
 
   return {
     props: {
+      randomPokeObj,
       pokes,
     },
   }
 }
 
-function Poke() {
-  // const [randomPoke, setRandomPoke] = useState('Pokemon')
-  // let pokeAll = Object.entries(pokes)
+function Poke({ randomPokeObj, pokes }) {
+  // console.log(randomPokeObj)
+  const stars = ({ url }) => {
+    const row = []
 
-  // console.log(pokes)
-  // let pokeInfo = []
-  // pokeAll[3][1].map(names => pokeInfo.push(names))
-  //
-  // let pokeNames = pokeInfo.map(a => a.name)
+    for (let i = 0; i < 20; i++) {
+      row.push(<img>{url}</img>)
+    }
 
-  // Finding api url of generated Pokemon
-  // const pokeObj = randomPoke
-  //   ? pokes['results'].find(item => item.name === randomPoke)
-  //   : ''
-  // console.log(pokeObj['url'])
+    return row
+  }
+
+  console.log(pokes)
+
+  const { sprites } = randomPokeObj
+  const { other } = sprites
+  const { dream_world } = other
+  const { front_default: pokePicture } = dream_world
+
+  //console.log(pokePicture)
 
   // <button onClick={() => setRandomPoke(pokeNames[randomNum])}>
   //   generate pokemon
@@ -49,7 +54,8 @@ function Poke() {
   // </ul>
   return (
     <>
-      <h1>Poke Names</h1>
+      <h1>Pokemons</h1>
+      <div>{stars(pokePicture)}</div>
     </>
   )
 }
