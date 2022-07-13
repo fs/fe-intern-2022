@@ -18,7 +18,7 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default function Game() {
+export default function Game({ randomPokemon }) {
   return (
     <div>
       <h1>Game Page</h1>
