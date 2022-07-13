@@ -17,13 +17,6 @@ export const getServerSideProps = async () => {
   const resPoke = await fetch(randomPokemon.url)
   const randomPokeObj = await resPoke.json()
 
-  //  const generateRandomPhotos = () => {
-  //      const photoUrl =
-  // `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${num}.svg`
-  //    for
-  //
-  //  }
-
   return {
     props: {
       randomPokeObj,
@@ -34,38 +27,24 @@ export const getServerSideProps = async () => {
 
 function Poke({ pokes }) {
   const { results } = pokes
-  // const { sprites } = randomPokeObj
-  // const { other } = sprites
-  // const { dream_world } = other
-  // const { front_default: pokePicture } = dream_world
-  //console.log(pokePicture)
-
-  // <button onClick={() => setRandomPoke(pokeNames[randomNum])}>
-  //   generate pokemon
-  // </button>
-  // <ul>
-  //   {pokeNames.map(pokeName => (
-  //     <li key={pokeName.id}>{pokeName}</li>
-  //   ))}
-  // </ul>
-  // pokeObj.url.slice(-2, -1)
+  console.log(pokes)
   return (
     <>
       <h1>Pokemons</h1>
       <ul>
-        {results.map(pokeObj => (
-          <div key={pokeObj.id}>
-            <li>{pokeObj.name}</li>
+        {results.map(({ name, url }) => (
+          <li key={url}>
+            <div>{name}</div>
             <Image
-              alt={pokeObj.name}
+              alt={name}
               width="300px"
               height="300px"
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokeObj.url.slice(
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${url.slice(
                 -2,
                 -1
               )}.svg`}
             />
-          </div>
+          </li>
         ))}
       </ul>
     </>
