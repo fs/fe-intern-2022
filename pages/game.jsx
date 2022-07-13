@@ -1,19 +1,19 @@
 export const getServerSideProps = async () => {
-  const url = `${process.env.API_URL}?limit=100&offset=0`
+  const url = `${process.env.API_URL}?limit=1000&offset=0`
   const res = await fetch(url)
   const pokes = await res.json()
 
-  const { results } = pokes
-
-  const randomNum = Math.floor(Math.random() * (results.length - 1))
-  const randomPokemon = results[randomNum]
-  const resPoke = await fetch(randomPokemon.url)
-  const randomPokeObj = await resPoke.json()
+  const { results: arrOfPokes } = pokes
+  const pokeNames = arrOfPokes.map(object => object.name)
+  const randomIndex = Math.floor(Math.random() * pokeNames.length)
+  const pokeResponse = await fetch(
+    `${process.env.API_URL}/${pokeNames[randomIndex]}`
+  )
+  const randomPokemon = await pokeResponse.json()
 
   return {
     props: {
-      randomPokeObj,
-      pokes,
+      randomPokemon,
     },
   }
 }
@@ -22,6 +22,7 @@ export default function Game() {
   return (
     <div>
       <h1>Game Page</h1>
+      <button>Start</button>
     </div>
   )
 }

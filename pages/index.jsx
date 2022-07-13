@@ -10,24 +10,16 @@ export const getServerSideProps = async () => {
   const res = await fetch(url)
   const pokes = await res.json()
 
-  const { results } = pokes
-
-  const randomNum = Math.floor(Math.random() * (results.length - 1))
-  const randomPokemon = results[randomNum]
-  const resPoke = await fetch(randomPokemon.url)
-  const randomPokeObj = await resPoke.json()
-
   return {
     props: {
-      randomPokeObj,
       pokes,
     },
   }
 }
 
-function Poke({ pokes }) {
+export function Poke({ pokes }) {
   const { results } = pokes
-  console.log(pokes)
+
   return (
     <>
       <h1>Pokemons</h1>
