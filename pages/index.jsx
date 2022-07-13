@@ -1,10 +1,13 @@
-// const getRandomNum = (min, max) => {
-//   let rand = min - 0.5 + Math.random() * (max - min + 1)
-//   return Math.round(rand)
-// }
+const getRandomNum = (min, max) => {
+  let rand = min - 0.5 + Math.random() * (max - min + 1)
+  return Math.round(rand)
+}
 
 export const getServerSideProps = async () => {
-  const url = `${process.env.API_URL}?limit=10&offset=0}`
+  const url = `${process.env.API_URL}?limit=100&offset=${getRandomNum(
+    0,
+    1154
+  )}}`
   const res = await fetch(url)
   const pokes = await res.json()
 
@@ -25,15 +28,15 @@ export const getServerSideProps = async () => {
 
 function Poke({ randomPokeObj, pokes }) {
   // console.log(randomPokeObj)
-  const stars = ({ url }) => {
-    const row = []
+  // const stars = ({ url }) => {
+  //   const row = []
 
-    for (let i = 0; i < 20; i++) {
-      row.push(<img>{url}</img>)
-    }
+  //   for (let i = 0; i < 20; i++) {
+  //     row.push(<img>{url}</img>)
+  //   }
 
-    return row
-  }
+  //   return row
+  // }
 
   console.log(pokes)
 
@@ -41,6 +44,7 @@ function Poke({ randomPokeObj, pokes }) {
   const { other } = sprites
   const { dream_world } = other
   const { front_default: pokePicture } = dream_world
+  const { name: pokeName } = randomPokeObj
 
   //console.log(pokePicture)
 
@@ -55,7 +59,9 @@ function Poke({ randomPokeObj, pokes }) {
   return (
     <>
       <h1>Pokemons</h1>
-      <div>{stars(pokePicture)}</div>
+
+      <img src={pokePicture}></img>
+      <p>{pokeName}</p>
     </>
   )
 }
