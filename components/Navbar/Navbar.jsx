@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Modal from '../Modal/Modal'
 
-import { Header } from 'styles/Typography/styles'
+import { Text } from 'styles/Typography/styles'
 import { Nav, Wrapper, Container, Button, CustomLink } from './styles'
 
-import logo from '../../public/img/logo.svg'
+import logo from 'public/img/logo.svg'
 
 function Navbar() {
   const [modalActive, setModalActive] = useState(false)
@@ -21,9 +21,9 @@ function Navbar() {
             alignItems="center"
             gap="15px"
           >
-            <Header as="h4" fontSize="30px" fontWeight="bold" color="#fff">
-              Log in
-            </Header>
+            <Text as="h4" fontSize="30px" fontWeight="bold" color="#fff">
+              Oops, seems like there is nothing here
+            </Text>
           </Container>
         </Modal>
       )}
@@ -38,13 +38,13 @@ function Navbar() {
           >
             <Image src={logo} alt="logo" width={140} height={40} />
             <Container display="flex" flexDirection="row" gap="32px">
-              <CustomLink href="/" animation="true">
+              <CustomLink href="/" animation>
                 Home
               </CustomLink>
-              <CustomLink href="/" animation="true">
+              <CustomLink href="/" animation>
                 Pokemons
               </CustomLink>
-              <CustomLink href="/" animation="true">
+              <CustomLink href="/" animation>
                 Game
               </CustomLink>
             </Container>

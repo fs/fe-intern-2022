@@ -18,7 +18,3 @@ export const PokemonTypeColor = {
   electric: '#F9CF30',
   dragon: '#7037FF',
 }
-
-export const TextColors = {
-  gray500: '#ADB9C7',
-}

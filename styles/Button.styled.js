@@ -1,13 +1,15 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Button = styled.button`
-  border-radius: 16px;
-  border-color: #1e50ff;
-  padding: 12px 24px;
-  font-size: ${props => props.fontSize || '16px'};
-  font-weight: 600;
-  background-color: ${props => props.bgColor};
-  color: #fff;
-  cursor: pointer;
-  width: ${props => props.width || 'fit-content'};
-`
+export const Button = styled.button(
+  ({ backgroundColor, fontSize, width, color, theme }) => css`
+    border-radius: 16px;
+    border-color: ${theme.primaryColor};
+    padding: 12px 24px;
+    font-size: ${fontSize || '16px'};
+    font-weight: 600;
+    background-color: ${backgroundColor};
+    color: ${color || theme.text};
+    cursor: pointer;
+    width: ${width || 'fit-content'};
+  `
+)
