@@ -1,13 +1,12 @@
-const getRandomNum = (min, max) => {
-  let rand = min - 0.5 + Math.random() * (max - min + 1)
-  return Math.round(rand)
-}
+import Image from 'next/image'
+
+// const getRandomNum = (min, max) => {
+//   let rand = min - 0.5 + Math.random() * (max - min + 1)
+//   return Math.round(rand)
+// }
 
 export const getServerSideProps = async () => {
-  const url = `${process.env.API_URL}?limit=100&offset=${getRandomNum(
-    0,
-    1154
-  )}}`
+  const url = `${process.env.API_URL}?limit=10&offset=0`
   const res = await fetch(url)
   const pokes = await res.json()
 
@@ -18,6 +17,13 @@ export const getServerSideProps = async () => {
   const resPoke = await fetch(randomPokemon.url)
   const randomPokeObj = await resPoke.json()
 
+  //  const generateRandomPhotos = () => {
+  //      const photoUrl =
+  // `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${num}.svg`
+  //    for
+  //
+  //  }
+
   return {
     props: {
       randomPokeObj,
@@ -26,26 +32,12 @@ export const getServerSideProps = async () => {
   }
 }
 
-function Poke({ randomPokeObj, pokes }) {
-  // console.log(randomPokeObj)
-  // const stars = ({ url }) => {
-  //   const row = []
-
-  //   for (let i = 0; i < 20; i++) {
-  //     row.push(<img>{url}</img>)
-  //   }
-
-  //   return row
-  // }
-
-  console.log(pokes)
-
-  const { sprites } = randomPokeObj
-  const { other } = sprites
-  const { dream_world } = other
-  const { front_default: pokePicture } = dream_world
-  const { name: pokeName } = randomPokeObj
-
+function Poke({ pokes }) {
+  const { results } = pokes
+  // const { sprites } = randomPokeObj
+  // const { other } = sprites
+  // const { dream_world } = other
+  // const { front_default: pokePicture } = dream_world
   //console.log(pokePicture)
 
   // <button onClick={() => setRandomPoke(pokeNames[randomNum])}>
@@ -56,12 +48,26 @@ function Poke({ randomPokeObj, pokes }) {
   //     <li key={pokeName.id}>{pokeName}</li>
   //   ))}
   // </ul>
+  // pokeObj.url.slice(-2, -1)
   return (
     <>
       <h1>Pokemons</h1>
-
-      <img src={pokePicture}></img>
-      <p>{pokeName}</p>
+      <ul>
+        {results.map(pokeObj => (
+          <div key={pokeObj.id}>
+            <li>{pokeObj.name}</li>
+            <Image
+              alt={pokeObj.name}
+              width="300px"
+              height="300px"
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokeObj.url.slice(
+                -2,
+                -1
+              )}.svg`}
+            />
+          </div>
+        ))}
+      </ul>
     </>
   )
 }
