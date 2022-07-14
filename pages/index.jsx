@@ -1,44 +1,40 @@
 import Image from 'next/image'
-
-// const getRandomNum = (min, max) => {
-//   let rand = min - 0.5 + Math.random() * (max - min + 1)
-//   return Math.round(rand)
-// }
+import PokemonCard from 'components/PokemonCard'
 
 export const getServerSideProps = async () => {
-  const url = `${process.env.API_URL}?limit=10&offset=0`
-  const res = await fetch(url)
-  const pokes = await res.json()
-
+  const collectingPokemons = num => {
+    return fetch(`${process.env.API_URL}/${num}`)
+      .then(res => res.json())
+      .then(data => data)
+  }
+  const arrayPokemons = []
+  for (let i = 1; i <= 10; i++) {
+    const randomNum = Math.floor(Math.random() * 900) + 1
+    const data = await collectingPokemons(randomNum)
+    arrayPokemons.push(data)
+  }
+  const arrayPokemonsMinimized = arrayPokemons.map(pokemon => {
+    return {
+      id: pokemon.id,
+      name: pokemon.name,
+      img: pokemon.sprites.other.dream_world.front_default,
+      types: pokemon.types,
+    }
+  })
   return {
     props: {
-      pokes,
+      arrayPokemons,
+      arrayPokemonsMinimized,
     },
   }
 }
 
-export function Poke({ pokes }) {
-  const { results } = pokes
-
+export function Poke({ arrayPokemonsMinimized, arrayPokemons }) {
+  console.log('Array down below', arrayPokemons)
+  console.log('Minimized array down below', arrayPokemonsMinimized)
   return (
     <>
       <h1>Pokemons</h1>
-      <ul>
-        {results.map(({ name, url }) => (
-          <li key={url}>
-            <div>{name}</div>
-            <Image
-              alt={name}
-              width="300px"
-              height="300px"
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${url.slice(
-                -2,
-                -1
-              )}.svg`}
-            />
-          </li>
-        ))}
-      </ul>
     </>
   )
 }
