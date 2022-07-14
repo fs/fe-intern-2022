@@ -1,5 +1,4 @@
-import Image from 'next/image'
-import PokemonCard from 'components/PokemonCard'
+import React, { useState, useEffect } from 'react'
 
 export const getServerSideProps = async () => {
   const collectingPokemons = num => {
@@ -29,12 +28,32 @@ export const getServerSideProps = async () => {
   }
 }
 
-export function Poke({ arrayPokemonsMinimized, arrayPokemons }) {
-  console.log('Array down below', arrayPokemons)
-  console.log('Minimized array down below', arrayPokemonsMinimized)
+export function Poke() {
+  const [value, setValue] = useState('')
+  const [pokemonName, setPokemonName] = useState('')
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+      .then(res => res.json())
+      .then(data => console.log(data))
+  }, [pokemonName])
+
   return (
     <>
       <h1>Pokemons</h1>
+      <div>
+        <input
+          placeholder="search pokemon"
+          onChange={e => setValue(e.target.value)}
+        ></input>
+        <input
+          type="submit"
+          value="Отправить"
+          onClick={() => setPokemonName(value)}
+        />
+        <ul>
+          <h1>{value}</h1>
+        </ul>
+      </div>
     </>
   )
 }
