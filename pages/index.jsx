@@ -1,26 +1,32 @@
-import Image from 'next/image'
-import PokemonCard from 'components/PokemonCard'
-
+import { Text } from 'styles/Typography/styles'
 export const getServerSideProps = async () => {
-  const collectingPokemons = num => {
-    return fetch(`${process.env.API_URL}/${num}`)
-      .then(res => res.json())
-      .then(data => data)
-  }
-  const arrayPokemons = []
-  for (let i = 1; i <= 10; i++) {
-    const randomNum = Math.floor(Math.random() * 900) + 1
-    const data = await collectingPokemons(randomNum)
-    arrayPokemons.push(data)
-  }
-  const arrayPokemonsMinimized = arrayPokemons.map(pokemon => {
-    return {
-      id: pokemon.id,
-      name: pokemon.name,
-      img: pokemon.sprites.other.dream_world.front_default,
-      types: pokemon.types,
-    }
+  //getting fetch requests with radnom id
+  const promises = [...Array(10).keys()].map(async () => {
+    const num = Math.floor(Math.random() * 900) + 1
+    return fetch(`${process.env.API_URL}/${num}`).then(response =>
+      response.json()
+    )
   })
+
+  const results = await Promise.allSettled(promises)
+
+  const arrayPokemons = results.reduce((acc, item) => {
+    if (item.value) {
+      acc.push(item.value)
+    }
+    return acc
+  }, [])
+
+  const arrayPokemonsMinimized = arrayPokemons.map(
+    ({ id, name, sprites, types }) => {
+      return {
+        id,
+        name,
+        img: sprites?.other.dream_world.front_default,
+        types,
+      }
+    }
+  )
   return {
     props: {
       arrayPokemons,
@@ -34,7 +40,9 @@ export function Poke({ arrayPokemonsMinimized, arrayPokemons }) {
   console.log('Minimized array down below', arrayPokemonsMinimized)
   return (
     <>
-      <h1>Pokemons</h1>
+      <Text fontSize="40px" textAlign="center">
+        Pokemons
+      </Text>
     </>
   )
 }
