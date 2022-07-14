@@ -1,10 +1,14 @@
 import { ModalBackground, ModalWindow } from './styles'
 
 const Modal = ({ setActive, children }) => {
+  const handleModalClose = e => {
+    e.stopPropagation()
+    setActive(false)
+  }
   return (
     <>
-      <ModalBackground onClick={() => setActive(false)}>
-        <ModalWindow onClick={e => e.stopPropagation()}>{children}</ModalWindow>
+      <ModalBackground onClick={e => handleModalClose(e)}>
+        <ModalWindow>{children}</ModalWindow>
       </ModalBackground>
     </>
   )
