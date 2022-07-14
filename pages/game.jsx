@@ -14,15 +14,26 @@ export const getServerSideProps = async () => {
   return {
     props: {
       randomPokemon,
+      pokeNames,
     },
   }
 }
 
-export default function Game({ randomPokemon }) {
+const getRandomPokeName = somearr => {
+  const rand = Math.floor(Math.random() * somearr.length)
+  return somearr[rand]
+}
+
+export default function Game({ pokeNames, randomPokemon }) {
+  const { name: correctName } = randomPokemon
+  console.log(correctName)
   return (
-    <div>
+    <div suppressHydrationWarning={true}>
       <h1>Game Page</h1>
-      <button>Start</button>
+      <button>{correctName}</button>
+      <button>{getRandomPokeName(pokeNames)}</button>
+      <button>{getRandomPokeName(pokeNames)}</button>
+      <button>{getRandomPokeName(pokeNames)}</button>
     </div>
   )
 }
