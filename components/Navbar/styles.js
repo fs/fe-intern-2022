@@ -36,11 +36,10 @@ export const CustomLink = styled.a(
     color: ${color || theme.gray500};
     text-decoration: none;
     cursor: pointer;
-    position: ${animation ? 'relative' : ''};
+    position: ${animation && 'relative'};
     outline: none;
-    animation: ${animation
-      ? animation &&
-        `
+    animation: ${animation &&
+    `
           display: inline-block;
           :after{
             content: '';
@@ -50,7 +49,7 @@ export const CustomLink = styled.a(
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: #1E50FF;
+            background-color: ${theme.underline};
             transform-origin:bottom right;
             transition: transform 0.25s ease-out;
           }
@@ -58,8 +57,7 @@ export const CustomLink = styled.a(
             transform: scaleX(1);
             transform-origin: bottom left;
           }
-        `
-      : 'inherit'};
+        `};
 
     :hover {
       color: ${theme.text};

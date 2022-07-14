@@ -7,6 +7,7 @@ export const theme = {
     secondaryColor: '#FFB830',
     backgroundColor: '#0F182E',
     gray500: '#ADB9C7',
+    underline: '#1E50FF',
   },
   pokemonCard: {
     darkGray: '#212121',
