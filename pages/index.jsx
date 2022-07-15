@@ -8,8 +8,8 @@ export const getServerSideProps = async () => {
 
   const results = await Promise.allSettled(fetches)
   const filteredResults = results
-    .filter(result => result.status === 'fulfilled')
-    .map(result => result.value)
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value)
 
   const responses = await Promise.all(filteredResults).then(res => {
     const responses = res.map(response => response.json())
