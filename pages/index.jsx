@@ -6,42 +6,41 @@ import altImg from 'public/img/pokemon-img.svg'
 
 export const getServerSideProps = async () => {
   //getting fetch requests with radnom id
-  const promises = [...Array(10).keys()].map(async () => {
-    const num = Math.floor(Math.random() * 900) + 1
-    return fetch(`${process.env.API_URL}/${num}`).then(response =>
-      response.json()
-    )
+  const fetches = [...Array(10).keys()].map(async () => {
+    const number = Math.floor(Math.random() * 900) + 1
+    return fetch(`${process.env.API_URL}/${number}`)
   })
 
-  const results = await Promise.allSettled(promises)
-  const pokemons = await Promise.all(results)
+  const results = await Promise.allSettled(fetches)
+  const filteredResults = results
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value)
 
-  const pokemonsInfo = pokemons.reduce((acc, item) => {
-    if (item.value) return [...acc, item.value]
-  }, [])
+  const responses = await Promise.all(filteredResults).then(res => {
+    const responses = res.map(response => response.json())
+    return responses
+  })
+  const pokemons = await Promise.all(responses)
 
-  const pokemonsInfoMinimized = pokemonsInfo.map(
-    ({ id, name, sprites, types }) => {
-      return {
-        id,
-        name,
-        img: sprites?.other.dream_world.front_default,
-        types,
-      }
+  const pokemonsMinimized = pokemons.map(({ id, name, sprites, types }) => {
+    return {
+      id,
+      name,
+      img: sprites?.other.dream_world.front_default,
+      types,
     }
-  )
-
+  })
   return {
     props: {
-      pokemonsInfo,
-      pokemonsInfoMinimized,
+      pokemons,
+      pokemonsMinimized,
     },
   }
 }
 
-export function Poke({ pokemonsInfoMinimized, pokemonsInfo }) {
-  console.log('Array down below', pokemonsInfo)
-  console.log('Minimized array down below', pokemonsInfoMinimized)
+export function Poke({ pokemonsMinimized, pokemons }) {
+  console.log('Array down below', pokemons)
+  console.log('Minimized array down below', pokemonsMinimized)
   return (
     <>
       <Wrapper>
@@ -62,7 +61,7 @@ export function Poke({ pokemonsInfoMinimized, pokemonsInfo }) {
             flexWrap="wrap"
             justifyContent="center"
           >
-            {pokemonsInfoMinimized.map(({ id, name, img, types }) => {
+            {pokemonsMinimized.map(({ id, name, img, types }) => {
               return (
                 <>
                   <MinimizedCard
