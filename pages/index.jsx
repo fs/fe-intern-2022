@@ -1,43 +1,41 @@
 import { Text } from 'styles/Typography/styles'
 export const getServerSideProps = async () => {
   //getting fetch requests with radnom id
-  const promises = [...Array(10).keys()].map(async () => {
-    const num = Math.floor(Math.random() * 900) + 1
-    return fetch(`${process.env.API_URL}/${num}`).then(response =>
-      response.json()
-    )
+  const fetches = [...Array(10).keys()].map(async () => {
+    const number = Math.floor(Math.random() * 900) + 1
+    return fetch(`${process.env.API_URL}/${number}`)
   })
 
-  const results = await Promise.allSettled(promises)
+  const results = await Promise.allSettled(fetches)
+  const filteredResults = results
+    .filter(result => result.status === 'fulfilled')
+    .map(result => result.value)
 
-  const arrayPokemons = results.reduce((acc, item) => {
-    if (item.value) {
-      acc.push(item.value)
-    }
-    return acc
-  }, [])
+  const responses = await Promise.all(filteredResults).then(res => {
+    const responses = res.map(response => response.json())
+    return responses
+  })
+  const pokemons = await Promise.all(responses)
 
-  const arrayPokemonsMinimized = arrayPokemons.map(
-    ({ id, name, sprites, types }) => {
-      return {
-        id,
-        name,
-        img: sprites?.other.dream_world.front_default,
-        types,
-      }
+  const pokemonsMinimized = pokemons.map(({ id, name, sprites, types }) => {
+    return {
+      id,
+      name,
+      img: sprites?.other.dream_world.front_default,
+      types,
     }
-  )
+  })
   return {
     props: {
-      arrayPokemons,
-      arrayPokemonsMinimized,
+      pokemons,
+      pokemonsMinimized,
     },
   }
 }
 
-export function Poke({ arrayPokemonsMinimized, arrayPokemons }) {
-  console.log('Array down below', arrayPokemons)
-  console.log('Minimized array down below', arrayPokemonsMinimized)
+export function Poke({ pokemonsMinimized, pokemons }) {
+  console.log('Array down below', pokemons)
+  console.log('Minimized array down below', pokemonsMinimized)
   return (
     <>
       <Text fontSize="40px" textAlign="center">
