@@ -1,6 +1,3 @@
-import Image from 'next/image'
-import PokemonCard from 'components/PokemonCard'
-
 export const getServerSideProps = async () => {
   const collectingPokemons = num => {
     return fetch(`${process.env.API_URL}/${num}`)
