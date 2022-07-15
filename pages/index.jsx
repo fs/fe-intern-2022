@@ -1,7 +1,6 @@
 import { Text } from 'styles/Typography/styles'
 export const getServerSideProps = async () => {
-  //getting fetch requests with radnom id
-  const fetches = [...Array(10).keys()].map(async () => {
+  const fetches = [...Array(10)].map(() => {
     const number = Math.floor(Math.random() * 900) + 1
     return fetch(`${process.env.API_URL}/${number}`)
   })
