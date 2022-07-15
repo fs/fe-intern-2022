@@ -13,7 +13,6 @@ export const Container = styled.div(
     margin,
     padding,
     width,
-    flexWrap,
   }) => css`
     display: ${display};
     flex-direction: ${flexDirection};
@@ -26,6 +25,6 @@ export const Container = styled.div(
     max-width: ${maxWidth};
     margin: ${margin};
     padding: ${padding};
-    flex-wrap: ${flexWrap};
+    border-radius: 10px;
   `
 )
