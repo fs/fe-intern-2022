@@ -25,6 +25,7 @@ export const Container = styled.div(
     max-width: ${maxWidth};
     margin: ${margin};
     padding: ${padding};
+    cursor: pointer;
     border-radius: 10px;
   `
 )

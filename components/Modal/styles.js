@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const ModalBackground = styled.div`
+  top: 0;
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.4);
@@ -13,8 +14,8 @@ export const ModalBackground = styled.div`
 
 export const ModalWindow = styled.div`
   padding: 20px;
-  border-radius: 20px;
-  background-color: #272d37;
+  /* border-radius: 20px;
+  background-color: #272d37; */
   height: fit-content;
   width: fit-content;
 `

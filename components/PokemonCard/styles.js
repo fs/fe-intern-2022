@@ -36,6 +36,9 @@ export const Type = styled.div(
     font-size: 10px;
     line-height: 16px;
     font-weight: 700;
+    ::first-letter {
+      text-transform: capitalize;
+    }
   `
 )
 

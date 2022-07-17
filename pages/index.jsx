@@ -1,12 +1,15 @@
+import React, { useState } from 'react'
+
 import { Text } from 'styles/Typography/styles'
 import { Container } from 'styles/Container.styled'
 import { Wrapper } from 'styles/Wrapper.styled'
-import MinimizedCard from 'components/MinimizedCard'
-import altImg from 'public/img/pokemon-img.svg'
+import PokemonCard from 'components/PokemonCard'
+import PokemonCardContainer from 'components/PokemonCardContainer'
+import Modal from 'components/Modal'
 
 export const getServerSideProps = async () => {
   //getting fetch requests with radnom id
-  const fetches = [...Array(10).keys()].map(async () => {
+  const fetches = [...Array(10)].map(() => {
     const number = Math.floor(Math.random() * 900) + 1
     return fetch(`${process.env.API_URL}/${number}`)
   })
@@ -39,8 +42,27 @@ export const getServerSideProps = async () => {
 }
 
 export function Poke({ pokemonsMinimized, pokemons }) {
-  console.log('Array down below', pokemons)
-  console.log('Minimized array down below', pokemonsMinimized)
+  const [pokemonId, setPokemonId] = useState('')
+  const [modalActive, setModalActive] = useState(false)
+  const pokemonInfo = pokemons.filter(pokemon => pokemon.id === pokemonId)
+  const pokemonInfoToDisplay = pokemonInfo.map(
+    ({ id, name, sprites, types, height, weight, stats }) => {
+      return {
+        id,
+        name,
+        types,
+        height,
+        weight,
+        img: sprites?.other.dream_world.front_default,
+        hp: stats[0].base_stat,
+        atk: stats[1].base_stat,
+        def: stats[2].base_stat,
+        satk: stats[3].base_stat,
+        sdef: stats[4].base_stat,
+        spd: stats[5].base_stat,
+      }
+    }
+  )
   return (
     <>
       <Wrapper>
@@ -51,31 +73,25 @@ export function Poke({ pokemonsMinimized, pokemons }) {
           gap="50px"
           padding="0 0 30px"
         >
-          <Text fontSize="40px" textAlign="center">
+          <Text
+            fontSize="40px"
+            textAlign="center"
+            onClick={() => setModalActive(true)}
+          >
             Pokemons
           </Text>
-          <Container
-            display="flex"
-            flexDirection="row"
-            gap="30px"
-            flexWrap="wrap"
-            justifyContent="center"
-          >
-            {pokemonsMinimized.map(({ id, name, img, types }) => {
-              return (
-                <>
-                  <MinimizedCard
-                    key={id}
-                    name={name}
-                    bgColor={types[0].type.name}
-                    img={img ? img : altImg}
-                  />
-                </>
-              )
-            })}
-          </Container>
+          <PokemonCardContainer
+            setActive={setModalActive}
+            setPokemon={setPokemonId}
+            pokeMinimized={pokemonsMinimized}
+          />
         </Container>
       </Wrapper>
+      {modalActive && (
+        <Modal setActive={setModalActive}>
+          <PokemonCard pokemonInfo={pokemonInfoToDisplay} />
+        </Modal>
+      )}
     </>
   )
 }

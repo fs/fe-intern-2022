@@ -10,21 +10,24 @@ import pokemon from 'public/img/pokemon-img.svg'
 import pokeball from 'public/img/pokeCard-bg.svg'
 import heightIcon from 'public/img/height-icon.svg'
 import weightIcon from 'public/img/weight-icon.svg'
+import altImg from 'public/img/pokemon-img.svg'
 import { theme } from 'styles/GlobalStyles'
 
-const PokemonCard = () => {
+const PokemonCard = props => {
   const typeColor = {
     colors: PokemonTypeColor,
   }
+  const poke = Object.values(props)[0][0]
   return (
     <Container
       display="flex"
       flexDirection="column"
       alignItems="center"
-      backgroundColor={typeColor.colors.grass}
+      backgroundColor={typeColor.colors[poke.types[0].type.name]}
       position="relative"
       padding="4px"
       maxWidth="360px"
+      width="360px"
       style={{ borderRadius: 10 }}
     >
       <PokeImageContainer top="0" right="0">
@@ -41,10 +44,10 @@ const PokemonCard = () => {
       >
         <Image src={arrow} width="24px" height="32px" alt="" />
         <Text fontSize="24px" fontWeight="700">
-          Bulbasaur
+          {poke.name}
         </Text>
         <Text fontSize="12px" fontWeight="700" margin="0 0 0 auto">
-          #001
+          #{poke.id}
         </Text>
       </Container>
       <Container
@@ -53,18 +56,19 @@ const PokemonCard = () => {
         alignItems="center"
         gap="16px"
         backgroundColor="#fff"
-        padding="56px 20px 44px"
+        padding="65px 20px 44px"
+        width="100%"
         margin="135px auto 0"
         position="relative"
         style={{ borderRadius: 8 }}
       >
         <PokeImageContainer top="-144">
           <Image
-            src={pokemon}
+            src={poke.img ? poke.img : altImg}
             width="200px"
             height="200px"
             style={{ position: 'absolute', top: 0 }}
-            alt=""
+            alt={pokemon}
           />
         </PokeImageContainer>
 
@@ -75,10 +79,22 @@ const PokemonCard = () => {
           gap="16px"
           width="fit-content"
         >
-          <Type backgroundColor={typeColor.colors.grass}>Grass</Type>
-          <Type backgroundColor={typeColor.colors.poison}>Poison</Type>
+          {poke.types.map((type, index) => {
+            return (
+              <Type
+                key={index}
+                backgroundColor={typeColor.colors[type.type.name]}
+              >
+                {type.type.name}
+              </Type>
+            )
+          })}
         </Container>
-        <Text fontSize="14px" fontWeight="700" color={typeColor.colors.grass}>
+        <Text
+          fontSize="14px"
+          fontWeight="700"
+          color={typeColor.colors[poke.types[0].type.name]}
+        >
           About
         </Text>
         <Container
@@ -112,7 +128,7 @@ const PokemonCard = () => {
                 fontWeight="400"
                 color={theme.pokemonCard.darkGray}
               >
-                6,9 kg
+                0,{poke.weight} kg
               </Text>
             </Container>
             <Text
@@ -148,7 +164,7 @@ const PokemonCard = () => {
                 fontWeight="400"
                 color={theme.pokemonCard.darkGray}
               >
-                0,7 m
+                0,{poke.height} m
               </Text>
             </Container>
             <Text
@@ -161,14 +177,10 @@ const PokemonCard = () => {
           </Container>
         </Container>
         <Text
-          fontSize="10px"
-          fontWeight="400"
-          color={theme.pokemonCard.darkGray}
+          fontSize="14px"
+          fontWeight="700"
+          color={typeColor.colors[poke.types[0].type.name]}
         >
-          There is a plant seed on its back right from the day this Pokémon is
-          born. The seed slowly grows larger.
-        </Text>
-        <Text fontSize="14px" fontWeight="700" color={typeColor.colors.grass}>
           Base Stats
         </Text>
         <Container display="flex" flexDirection="row" gap="12px" width="100%">
@@ -176,7 +188,7 @@ const PokemonCard = () => {
             <Text
               fontSize="10px"
               fontWeight="700"
-              color={typeColor.colors.grass}
+              color={typeColor.colors[poke.types[0].type.name]}
               lineHeight="16px"
               textAlign="right"
             >
@@ -185,7 +197,7 @@ const PokemonCard = () => {
             <Text
               fontSize="10px"
               fontWeight="700"
-              color={typeColor.colors.grass}
+              color={typeColor.colors[poke.types[0].type.name]}
               lineHeight="16px"
               textAlign="right"
             >
@@ -194,7 +206,7 @@ const PokemonCard = () => {
             <Text
               fontSize="10px"
               fontWeight="700"
-              color={typeColor.colors.grass}
+              color={typeColor.colors[poke.types[0].type.name]}
               lineHeight="16px"
               textAlign="right"
             >
@@ -203,7 +215,7 @@ const PokemonCard = () => {
             <Text
               fontSize="10px"
               fontWeight="700"
-              color={typeColor.colors.grass}
+              color={typeColor.colors[poke.types[0].type.name]}
               lineHeight="16px"
               textAlign="right"
             >
@@ -212,7 +224,7 @@ const PokemonCard = () => {
             <Text
               fontSize="10px"
               fontWeight="700"
-              color={typeColor.colors.grass}
+              color={typeColor.colors[poke.types[0].type.name]}
               lineHeight="16px"
               textAlign="right"
             >
@@ -221,7 +233,7 @@ const PokemonCard = () => {
             <Text
               fontSize="10px"
               fontWeight="700"
-              color={typeColor.colors.grass}
+              color={typeColor.colors[poke.types[0].type.name]}
               lineHeight="16px"
               textAlign="right"
             >
@@ -243,9 +255,12 @@ const PokemonCard = () => {
                 lineHeight="16px"
                 color={theme.pokemonCard.darkGray}
               >
-                045
+                {poke.hp ? poke.hp : '??'}
               </Text>
-              <ProgressBar bgcolor={typeColor.colors.grass} completed={45} />
+              <ProgressBar
+                bgcolor={typeColor.colors[poke.types[0].type.name]}
+                completed={poke.hp}
+              />
             </Container>
             <Container
               display="flex"
@@ -260,9 +275,12 @@ const PokemonCard = () => {
                 lineHeight="16px"
                 color={theme.pokemonCard.darkGray}
               >
-                049
+                {poke.atk ? poke.atk : '??'}
               </Text>
-              <ProgressBar bgcolor={typeColor.colors.grass} completed={49} />
+              <ProgressBar
+                bgcolor={typeColor.colors[poke.types[0].type.name]}
+                completed={poke.atk}
+              />
             </Container>
             <Container
               display="flex"
@@ -277,9 +295,12 @@ const PokemonCard = () => {
                 lineHeight="16px"
                 color={theme.pokemonCard.darkGray}
               >
-                049
+                {poke.def ? poke.def : '??'}
               </Text>
-              <ProgressBar bgcolor={typeColor.colors.grass} completed={49} />
+              <ProgressBar
+                bgcolor={typeColor.colors[poke.types[0].type.name]}
+                completed={poke.def}
+              />
             </Container>
             <Container
               display="flex"
@@ -294,9 +315,12 @@ const PokemonCard = () => {
                 lineHeight="16px"
                 color={theme.pokemonCard.darkGray}
               >
-                065
+                {poke.satk ? poke.satk : '??'}
               </Text>
-              <ProgressBar bgcolor={typeColor.colors.grass} completed={65} />
+              <ProgressBar
+                bgcolor={typeColor.colors[poke.types[0].type.name]}
+                completed={poke.satk}
+              />
             </Container>
             <Container
               display="flex"
@@ -311,9 +335,12 @@ const PokemonCard = () => {
                 lineHeight="16px"
                 color={theme.pokemonCard.darkGray}
               >
-                065
+                {poke.sdef ? poke.sdef : '??'}
               </Text>
-              <ProgressBar bgcolor={typeColor.colors.grass} completed={65} />
+              <ProgressBar
+                bgcolor={typeColor.colors[poke.types[0].type.name]}
+                completed={poke.sdef}
+              />
             </Container>
             <Container
               display="flex"
@@ -328,9 +355,12 @@ const PokemonCard = () => {
                 lineHeight="16px"
                 color={theme.pokemonCard.darkGray}
               >
-                045
+                {poke.spd ? poke.spd : '??'}
               </Text>
-              <ProgressBar bgcolor={typeColor.colors.grass} completed={45} />
+              <ProgressBar
+                bgcolor={typeColor.colors[poke.types[0].type.name]}
+                completed={poke.spd}
+              />
             </Container>
           </Container>
         </Container>
