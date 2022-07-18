@@ -1,4 +1,5 @@
 import { Text } from 'styles/Typography/styles'
+
 export const getServerSideProps = async () => {
   const fetches = [...Array(10)].map(() => {
     const number = Math.floor(Math.random() * 900) + 1
