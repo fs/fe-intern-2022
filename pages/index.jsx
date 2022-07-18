@@ -8,7 +8,6 @@ import PokemonCardContainer from 'components/PokemonCardContainer'
 import Modal from 'components/Modal'
 
 export const getServerSideProps = async () => {
-  //getting fetch requests with radnom id
   const fetches = [...Array(10)].map(() => {
     const number = Math.floor(Math.random() * 900) + 1
     return fetch(`${process.env.API_URL}/${number}`)
