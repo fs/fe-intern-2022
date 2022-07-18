@@ -19,5 +19,6 @@ describe('Homepage', () => {
     const container = screen.getByTestId('container')
 
     // Assers
+    expect(container).toBeNull()
   })
 })

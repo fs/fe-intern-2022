@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "prepare": "husky install",
     "pre-commit": "yarn format && git add -A .",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "jest": "jest"
   },
   "dependencies": {
     "axios": "^0.27.2",
