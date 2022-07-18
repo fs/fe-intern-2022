@@ -1,40 +1,46 @@
-import React, { useState, useEffect } from 'react'
+import { Text } from 'styles/Typography/styles'
 
-export function Poke() {
-  const [value, setValue] = useState('')
-  const [pokemonName, setPokemonName] = useState('')
-  const [isError, setError] = useState(false)
-  useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setError(false)
-      })
-      .catch(e => {
-        setError(true)
-        console.log('error', e)
-      })
-  }, [pokemonName])
+export const getServerSideProps = async () => {
+  const fetches = [...Array(10)].map(() => {
+    const number = Math.floor(Math.random() * 900) + 1
+    return fetch(`${process.env.API_URL}/${number}`)
+  })
 
+  const results = await Promise.allSettled(fetches)
+  const filteredResults = results
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value)
+
+  const responses = await Promise.all(filteredResults).then(res => {
+    const responses = res.map(response => response.json())
+    return responses
+  })
+  const pokemons = await Promise.all(responses)
+
+  const pokemonsMinimized = pokemons.map(({ id, name, sprites, types }) => {
+    return {
+      id,
+      name,
+      img: sprites?.other.dream_world.front_default,
+      types,
+    }
+  })
+  return {
+    props: {
+      pokemons,
+      pokemonsMinimized,
+    },
+  }
+}
+
+export function Poke({ pokemonsMinimized, pokemons }) {
+  console.log('Array down below', pokemons)
+  console.log('Minimized array down below', pokemonsMinimized)
   return (
     <>
-      <h1>Pokemons</h1>
-      <div>
-        <input
-          placeholder="search pokemon"
-          onChange={e => setValue(e.target.value)}
-        ></input>
-        <input
-          type="submit"
-          value="Submit"
-          onClick={() => setPokemonName(value)}
-        />
-        {isError && <div>Oops, thats an error</div>}
-        <ul>
-          <h1>{value}</h1>
-        </ul>
-      </div>
+      <Text fontSize="40px" textAlign="center">
+        Pokemons
+      </Text>
     </>
   )
 }
