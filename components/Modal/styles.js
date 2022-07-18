@@ -14,8 +14,6 @@ export const ModalBackground = styled.div`
 
 export const ModalWindow = styled.div`
   padding: 20px;
-  /* border-radius: 20px;
-  background-color: #272d37; */
   height: fit-content;
   width: fit-content;
 `

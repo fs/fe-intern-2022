@@ -1,6 +1,24 @@
 import ProgressBar from 'components/ProgressBar'
 
-import { Container, Type, PokeImageContainer, Divider } from './styles'
+import {
+  Container,
+  Type,
+  PokeImageContainer,
+  Divider,
+  TopContainer,
+  BottomContainer,
+  TypesContainer,
+  ProportionsContainer,
+  SingleProportionContainer,
+  SingleProportionTopContainer,
+  StatsContainer,
+  StatsNamesContainer,
+  StatName,
+  ProgressBarsContainer,
+  StatValue,
+  SinglePropgressBarContainer,
+  PokemonName,
+} from './styles'
 import { Text } from 'styles/Typography/styles'
 import { PokemonTypeColor } from 'styles/Variables'
 
@@ -19,49 +37,20 @@ const PokemonCard = props => {
   }
   const poke = Object.values(props)[0][0]
   return (
-    <Container
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      backgroundColor={typeColor.colors[poke.types[0].type.name]}
-      position="relative"
-      padding="4px"
-      maxWidth="360px"
-      width="360px"
-      style={{ borderRadius: 10 }}
-    >
+    <Container backgroundColor={typeColor.colors[poke.types[0].type.name]}>
       <PokeImageContainer top="0" right="0">
         <Image src={pokeball} width="208px" height="208px" alt="pokeball" />
       </PokeImageContainer>
-      <Container
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="flex-start"
-        width="90%"
-        gap="16px"
-        margin="24px auto"
-      >
+      <TopContainer>
         <Image src={arrow} width="24px" height="32px" alt="" />
-        <Text fontSize="24px" fontWeight="700">
+        <PokemonName fontSize="24px" fontWeight="700">
           {poke.name}
-        </Text>
+        </PokemonName>
         <Text fontSize="12px" fontWeight="700" margin="0 0 0 auto">
           #{poke.id}
         </Text>
-      </Container>
-      <Container
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        gap="16px"
-        backgroundColor="#fff"
-        padding="65px 20px 44px"
-        width="100%"
-        margin="135px auto 0"
-        position="relative"
-        style={{ borderRadius: 8 }}
-      >
+      </TopContainer>
+      <BottomContainer>
         <PokeImageContainer top="-144">
           <Image
             src={poke.img ? poke.img : altImg}
@@ -72,13 +61,7 @@ const PokemonCard = props => {
           />
         </PokeImageContainer>
 
-        <Container
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          gap="16px"
-          width="fit-content"
-        >
+        <TypesContainer>
           {poke.types.map((type, index) => {
             return (
               <Type
@@ -89,7 +72,7 @@ const PokemonCard = props => {
               </Type>
             )
           })}
-        </Container>
+        </TypesContainer>
         <Text
           fontSize="14px"
           fontWeight="700"
@@ -97,26 +80,9 @@ const PokemonCard = props => {
         >
           About
         </Text>
-        <Container
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          gap="24px"
-        >
-          <Container
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="8px"
-          >
-            <Container
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              gap="8px"
-            >
+        <ProportionsContainer>
+          <SingleProportionContainer>
+            <SingleProportionTopContainer>
               <Image
                 src={weightIcon}
                 width="16px"
@@ -130,7 +96,7 @@ const PokemonCard = props => {
               >
                 0,{poke.weight} kg
               </Text>
-            </Container>
+            </SingleProportionTopContainer>
             <Text
               fontSize="8px"
               fontWeight="400"
@@ -138,21 +104,10 @@ const PokemonCard = props => {
             >
               Weight
             </Text>
-          </Container>
+          </SingleProportionContainer>
           <Divider borderColor={theme.pokemonCard.lightGray} height="48px" />
-          <Container
-            display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="8px"
-          >
-            <Container
-              display="flex"
-              flexDirection="row"
-              alignItems="center"
-              gap="8px"
-            >
+          <SingleProportionContainer>
+            <SingleProportionTopContainer>
               <Image
                 src={heightIcon}
                 width="16px"
@@ -166,7 +121,7 @@ const PokemonCard = props => {
               >
                 0,{poke.height} m
               </Text>
-            </Container>
+            </SingleProportionTopContainer>
             <Text
               fontSize="8px"
               fontWeight="400"
@@ -174,8 +129,8 @@ const PokemonCard = props => {
             >
               Height
             </Text>
-          </Container>
-        </Container>
+          </SingleProportionContainer>
+        </ProportionsContainer>
         <Text
           fontSize="14px"
           fontWeight="700"
@@ -183,188 +138,86 @@ const PokemonCard = props => {
         >
           Base Stats
         </Text>
-        <Container display="flex" flexDirection="row" gap="12px" width="100%">
-          <Container display="flex" flexDirection="column">
-            <Text
-              fontSize="10px"
-              fontWeight="700"
-              color={typeColor.colors[poke.types[0].type.name]}
-              lineHeight="16px"
-              textAlign="right"
-            >
+        <StatsContainer>
+          <StatsNamesContainer>
+            <StatName color={typeColor.colors[poke.types[0].type.name]}>
               HP
-            </Text>
-            <Text
-              fontSize="10px"
-              fontWeight="700"
-              color={typeColor.colors[poke.types[0].type.name]}
-              lineHeight="16px"
-              textAlign="right"
-            >
+            </StatName>
+            <StatName color={typeColor.colors[poke.types[0].type.name]}>
               ATK
-            </Text>
-            <Text
-              fontSize="10px"
-              fontWeight="700"
-              color={typeColor.colors[poke.types[0].type.name]}
-              lineHeight="16px"
-              textAlign="right"
-            >
+            </StatName>
+            <StatName color={typeColor.colors[poke.types[0].type.name]}>
               DEF
-            </Text>
-            <Text
-              fontSize="10px"
-              fontWeight="700"
-              color={typeColor.colors[poke.types[0].type.name]}
-              lineHeight="16px"
-              textAlign="right"
-            >
+            </StatName>
+            <StatName color={typeColor.colors[poke.types[0].type.name]}>
               SATK
-            </Text>
-            <Text
-              fontSize="10px"
-              fontWeight="700"
-              color={typeColor.colors[poke.types[0].type.name]}
-              lineHeight="16px"
-              textAlign="right"
-            >
+            </StatName>
+            <StatName color={typeColor.colors[poke.types[0].type.name]}>
               SDEF
-            </Text>
-            <Text
-              fontSize="10px"
-              fontWeight="700"
-              color={typeColor.colors[poke.types[0].type.name]}
-              lineHeight="16px"
-              textAlign="right"
-            >
+            </StatName>
+            <StatName color={typeColor.colors[poke.types[0].type.name]}>
               SPD
-            </Text>
-          </Container>
+            </StatName>
+          </StatsNamesContainer>
           <Divider borderColor={theme.pokemonCard.lightGray} height="100px" />
-          <Container display="flex" flexDirection="column" width="100%">
-            <Container
-              display="flex"
-              flexDirection="row"
-              gap="8px"
-              width="100%"
-              alignItems="center"
-            >
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                lineHeight="16px"
-                color={theme.pokemonCard.darkGray}
-              >
+          <ProgressBarsContainer>
+            <SinglePropgressBarContainer>
+              <StatValue color={theme.pokemonCard.darkGray}>
                 {poke.hp ? poke.hp : '??'}
-              </Text>
+              </StatValue>
               <ProgressBar
                 bgcolor={typeColor.colors[poke.types[0].type.name]}
                 completed={poke.hp}
               />
-            </Container>
-            <Container
-              display="flex"
-              flexDirection="row"
-              gap="8px"
-              width="100%"
-              alignItems="center"
-            >
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                lineHeight="16px"
-                color={theme.pokemonCard.darkGray}
-              >
+            </SinglePropgressBarContainer>
+            <SinglePropgressBarContainer>
+              <StatValue color={theme.pokemonCard.darkGray}>
                 {poke.atk ? poke.atk : '??'}
-              </Text>
+              </StatValue>
               <ProgressBar
                 bgcolor={typeColor.colors[poke.types[0].type.name]}
                 completed={poke.atk}
               />
-            </Container>
-            <Container
-              display="flex"
-              flexDirection="row"
-              gap="8px"
-              width="100%"
-              alignItems="center"
-            >
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                lineHeight="16px"
-                color={theme.pokemonCard.darkGray}
-              >
+            </SinglePropgressBarContainer>
+            <SinglePropgressBarContainer>
+              <StatValue color={theme.pokemonCard.darkGray}>
                 {poke.def ? poke.def : '??'}
-              </Text>
+              </StatValue>
               <ProgressBar
                 bgcolor={typeColor.colors[poke.types[0].type.name]}
                 completed={poke.def}
               />
-            </Container>
-            <Container
-              display="flex"
-              flexDirection="row"
-              gap="8px"
-              width="100%"
-              alignItems="center"
-            >
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                lineHeight="16px"
-                color={theme.pokemonCard.darkGray}
-              >
+            </SinglePropgressBarContainer>
+            <SinglePropgressBarContainer>
+              <StatValue color={theme.pokemonCard.darkGray}>
                 {poke.satk ? poke.satk : '??'}
-              </Text>
+              </StatValue>
               <ProgressBar
                 bgcolor={typeColor.colors[poke.types[0].type.name]}
                 completed={poke.satk}
               />
-            </Container>
-            <Container
-              display="flex"
-              flexDirection="row"
-              gap="8px"
-              width="100%"
-              alignItems="center"
-            >
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                lineHeight="16px"
-                color={theme.pokemonCard.darkGray}
-              >
+            </SinglePropgressBarContainer>
+            <SinglePropgressBarContainer>
+              <StatValue color={theme.pokemonCard.darkGray}>
                 {poke.sdef ? poke.sdef : '??'}
-              </Text>
+              </StatValue>
               <ProgressBar
                 bgcolor={typeColor.colors[poke.types[0].type.name]}
                 completed={poke.sdef}
               />
-            </Container>
-            <Container
-              display="flex"
-              flexDirection="row"
-              gap="8px"
-              width="100%"
-              alignItems="center"
-            >
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                lineHeight="16px"
-                color={theme.pokemonCard.darkGray}
-              >
+            </SinglePropgressBarContainer>
+            <SinglePropgressBarContainer>
+              <StatValue color={theme.pokemonCard.darkGray}>
                 {poke.spd ? poke.spd : '??'}
-              </Text>
+              </StatValue>
               <ProgressBar
                 bgcolor={typeColor.colors[poke.types[0].type.name]}
                 completed={poke.spd}
               />
-            </Container>
-          </Container>
-        </Container>
-      </Container>
+            </SinglePropgressBarContainer>
+          </ProgressBarsContainer>
+        </StatsContainer>
+      </BottomContainer>
     </Container>
   )
 }
