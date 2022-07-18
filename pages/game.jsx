@@ -1,6 +1,57 @@
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
+const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 2em auto;
+  @media screen and (min-width: 1180px) {
+    width: 50%;
+  }
+`
+
+const Question = styled.div`
+  width: 70%;
+  margin: 0 auto;
+`
+const Option = styled.button`
+  display: block;
+  border: 1px solid #616a94;
+  border-radius: 15px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #616a94;
+  background-color: #161a31;
+  transition: 0.3s;
+  font-size: 1em;
+  outline: none;
+  user-select: none;
+  cursor: pointer;
+
+  @media screen and (min-width: 1180px) {
+    &:hover {
+      color: white;
+      background-color: #616a94;
+    }
+  }
+`
+
+const QuizWindow = styled.div`
+  text-align: center;
+  font-size: clamp(20px, 2.5vw, 24px);
+  margin-top: 5vh;
+`
+const Title = styled.h1`
+  margin-top: 4em;
+  font-size: 48px;
+`
+
+const Points = styled.p`
+  font-size: 24px;
+  margin-bottom: 3em;
+`
 export const getServerSideProps = async () => {
   const url = `${process.env.API_URL}?limit=500&offset=0`
   const res = await fetch(url)
@@ -65,31 +116,41 @@ export default function Game({ pokeNames }) {
   }
 
   return (
-    <div>
+    <QuizWindow>
       {/* game loop  */}
       {questionsAnswered < 10 && question && (
-        <div>
-          <h1>You Answered {questionsAnswered}/10</h1>
-          <Image src={question.image} height="300px" width="300px" alt="poke" />
-          <ul>
-            {question.options.map((answer, index) => (
-              <li key={index}>
-                <button onClick={pickAnswer} key={index}>
-                  {answer}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Question>
+          {/* <h1>You Answered {questionsAnswered}/10</h1> */}
+          <>
+            <Image
+              src={question.image}
+              height="200px"
+              width="200px"
+              alt="poke"
+            />
+            <ul>
+              {question.options.map((answer, index) => (
+                <Options key={index}>
+                  <Option onClick={pickAnswer} key={index}>
+                    {answer}
+                  </Option>
+                </Options>
+              ))}
+            </ul>
+          </>
+        </Question>
       )}
 
       {/* gameover */}
       {questionsAnswered === 10 && (
-        <>
-          <h1>Game Over! Your Result: {pts}/10</h1>
-          <button onClick={() => restartGame()}>Play Again!</button>
-        </>
+        <QuizWindow>
+          <Title>Game Over! </Title>
+          <Points>You guessed {pts} out of 10</Points>
+          <Options>
+            <Option onClick={() => restartGame()}>Play Again!</Option>
+          </Options>
+        </QuizWindow>
       )}
-    </div>
+    </QuizWindow>
   )
 }
