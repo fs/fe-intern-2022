@@ -1,37 +1,46 @@
+import { Text } from 'styles/Typography/styles'
+
 export const getServerSideProps = async () => {
-  const collectingPokemons = num => {
-    return fetch(`${process.env.API_URL}/${num}`)
-      .then(res => res.json())
-      .then(data => data)
-  }
-  const arrayPokemons = []
-  for (let i = 1; i <= 10; i++) {
-    const randomNum = Math.floor(Math.random() * 900) + 1
-    const data = await collectingPokemons(randomNum)
-    arrayPokemons.push(data)
-  }
-  const arrayPokemonsMinimized = arrayPokemons.map(pokemon => {
+  const fetches = [...Array(10)].map(() => {
+    const number = Math.floor(Math.random() * 900) + 1
+    return fetch(`${process.env.API_URL}/${number}`)
+  })
+
+  const results = await Promise.allSettled(fetches)
+  const filteredResults = results
+    .filter(({ status }) => status === 'fulfilled')
+    .map(({ value }) => value)
+
+  const responses = await Promise.all(filteredResults).then(res => {
+    const responses = res.map(response => response.json())
+    return responses
+  })
+  const pokemons = await Promise.all(responses)
+
+  const pokemonsMinimized = pokemons.map(({ id, name, sprites, types }) => {
     return {
-      id: pokemon.id,
-      name: pokemon.name,
-      img: pokemon.sprites.other.dream_world.front_default,
-      types: pokemon.types,
+      id,
+      name,
+      img: sprites?.other.dream_world.front_default,
+      types,
     }
   })
   return {
     props: {
-      arrayPokemons,
-      arrayPokemonsMinimized,
+      pokemons,
+      pokemonsMinimized,
     },
   }
 }
 
-export function Poke({ arrayPokemonsMinimized, arrayPokemons }) {
-  console.log('Array down below', arrayPokemons)
-  console.log('Minimized array down below', arrayPokemonsMinimized)
+export function Poke({ pokemonsMinimized, pokemons }) {
+  console.log('Array down below', pokemons)
+  console.log('Minimized array down below', pokemonsMinimized)
   return (
     <>
-      <h1>Pokemons</h1>
+      <Text fontSize="40px" textAlign="center">
+        Pokemons
+      </Text>
     </>
   )
 }
