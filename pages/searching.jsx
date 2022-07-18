@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-export function Poke() {
+export function SearchingPoke() {
   const [value, setValue] = useState('')
   const [pokemonName, setPokemonName] = useState('')
   const [isError, setError] = useState(false)
@@ -39,4 +39,4 @@ export function Poke() {
   )
 }
 
-export default Poke
+export default SearchingPoke
