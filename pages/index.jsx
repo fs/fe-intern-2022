@@ -2,8 +2,6 @@ import { Text } from 'styles/Typography/styles'
 import { fetchPokemons } from 'pages/api/fetchPokemons'
 
 export const getServerSideProps = async () => {
-  const { pokemons, pokemonsMinimized } = await fetchPokemons()
-
   return {
     props: {
       pokemons,
@@ -12,11 +10,13 @@ export const getServerSideProps = async () => {
   }
 }
 
-export function Poke({ pokemonsMinimized, pokemons }) {
+export const Poke = () => {
+  const { pokemons, pokemonsMinimized } = fetchPokemons()
+
   return (
     <>
       <Text fontSize="40px" textAlign="center" data-testid="container">
-        Pokemons
+        Pokemons {pokemons[0]}
       </Text>
     </>
   )
