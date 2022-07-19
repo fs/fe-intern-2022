@@ -25,6 +25,7 @@ export const Filler = styled.div(
       width: calc(${completed}% / 2.3);
       background-color: ${backgroundColor};
       border-radius: inherit;
+      max-width: 100%;
       text-align: right;
       animation: ${animationSettings(completed)} 1s ease;
     `
