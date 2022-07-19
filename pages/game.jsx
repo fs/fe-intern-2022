@@ -29,6 +29,7 @@ const Option = styled.button`
   outline: none;
   user-select: none;
   cursor: pointer;
+  
   @media screen and (min-width: 1180px) {
     &:hover {
       color: white;

@@ -7,33 +7,35 @@ export const Wrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 `
-export const Container = styled.div(
-  ({ display, flexDirection, justifyContent, alignItems, gap }) => css`
-    display: ${display};
-    flex-direction: ${flexDirection};
-    justify-content: ${justifyContent};
-    align-items: ${alignItems};
-    gap: ${gap};
-  `
-)
+export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
 
 export const Button = styled.button(
-  ({ backgroundColor, fontSize, width, color, theme }) => css`
+  ({ backgroundColor, theme }) => css`
     border-radius: 16px;
     border-color: ${theme.primaryColor};
     padding: 12px 24px;
-    font-size: ${fontSize || '16px'};
+    font-size: 16px;
     font-weight: 600;
     background-color: ${backgroundColor};
-    color: ${color || theme.text};
+    color: ${theme.text};
     cursor: pointer;
-    width: ${width || 'fit-content'};
+    width: fit-content;
   `
 )
+
+export const LinksContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+`
 export const CustomLink = styled.a(
-  ({ fontSize, color, animation, theme }) => css`
-    font-size: ${fontSize};
-    color: ${color || theme.gray500};
+  ({ animation, theme }) => css`
+    color: ${theme.gray500};
     text-decoration: none;
     cursor: pointer;
     position: ${animation && 'relative'};
@@ -65,3 +67,10 @@ export const CustomLink = styled.a(
     }
   `
 )
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+`
