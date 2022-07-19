@@ -21,18 +21,20 @@ export const TopContainer = styled.div`
   gap: 16px;
   margin: 24px auto;
 `
-export const BottomContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  background-color: #fff;
-  padding: 65px 20px 44px;
-  width: 100%;
-  border-radius: 8px;
-  position: relative;
-  margin: 135px auto 0;
-`
+export const BottomContainer = styled.div(
+  ({ bgColor }) => css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background-color: ${bgColor};
+    padding: 65px 20px 44px;
+    width: 100%;
+    border-radius: 8px;
+    position: relative;
+    margin: 135px auto 0;
+  `
+)
 export const TypesContainer = styled.div`
   display: flex;
   flex-direction: row;

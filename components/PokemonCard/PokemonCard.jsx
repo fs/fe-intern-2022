@@ -46,11 +46,11 @@ const PokemonCard = props => {
         <PokemonName fontSize="24px" fontWeight="700">
           {poke.name}
         </PokemonName>
-        <Text fontSize="12px" fontWeight="700" margin="0 0 0 auto">
+        <Text fontWeight="700" margin="0 0 0 auto">
           #{poke.id}
         </Text>
       </TopContainer>
-      <BottomContainer>
+      <BottomContainer bgColor={theme.pokemonCard.white}>
         <PokeImageContainer top="-144">
           <Image
             src={poke.img ? poke.img : altImg}
@@ -89,19 +89,11 @@ const PokemonCard = props => {
                 height="16px"
                 alt="weight-icon"
               />
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                color={theme.pokemonCard.darkGray}
-              >
+              <Text fontSize="10px" color={theme.pokemonCard.darkGray}>
                 0,{poke.weight} kg
               </Text>
             </SingleProportionTopContainer>
-            <Text
-              fontSize="8px"
-              fontWeight="400"
-              color={theme.pokemonCard.mediumGray}
-            >
+            <Text fontSize="8px" color={theme.pokemonCard.mediumGray}>
               Weight
             </Text>
           </SingleProportionContainer>
@@ -114,19 +106,11 @@ const PokemonCard = props => {
                 height="16px"
                 alt="weight-icon"
               />
-              <Text
-                fontSize="10px"
-                fontWeight="400"
-                color={theme.pokemonCard.darkGray}
-              >
+              <Text fontSize="10px" color={theme.pokemonCard.darkGray}>
                 0,{poke.height} m
               </Text>
             </SingleProportionTopContainer>
-            <Text
-              fontSize="8px"
-              fontWeight="400"
-              color={theme.pokemonCard.mediumGray}
-            >
+            <Text fontSize="8px" color={theme.pokemonCard.mediumGray}>
               Height
             </Text>
           </SingleProportionContainer>

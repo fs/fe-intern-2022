@@ -12,10 +12,6 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
 `
 
 export const Button = styled.button(

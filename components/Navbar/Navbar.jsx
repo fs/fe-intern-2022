@@ -24,7 +24,7 @@ function Navbar() {
       {modalActive && (
         <Modal setActive={setModalActive}>
           <ModalContainer>
-            <Text as="h4" fontSize="30px" fontWeight="bold" color="#fff">
+            <Text as="h4" fontSize="30px" fontWeight="bold">
               Oops, seems like there is nothing here
             </Text>
           </ModalContainer>

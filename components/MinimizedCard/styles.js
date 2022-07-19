@@ -16,12 +16,12 @@ export const Container = styled.div(
 )
 
 export const ImgContainer = styled.div(
-  () => css`
+  ({ bgColor }) => css`
     display: flex;
-    width: 99%;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
-    background-color: #fff;
+    background-color: ${bgColor};
     padding: 8px 8px;
     margin: 1px;
     gap: 10px;
