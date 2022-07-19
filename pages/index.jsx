@@ -1,4 +1,11 @@
+import React, { useState } from 'react'
+
 import { Text } from 'styles/Typography/styles'
+import { Container } from 'styles/Container.styled'
+import { Wrapper } from 'styles/Wrapper.styled'
+import PokemonCard from 'components/PokemonCard'
+import PokemonCardContainer from 'components/PokemonCardContainer'
+import Modal from 'components/Modal'
 
 export const getServerSideProps = async () => {
   const fetches = [...Array(10)].map(() => {
@@ -34,13 +41,56 @@ export const getServerSideProps = async () => {
 }
 
 export function Poke({ pokemonsMinimized, pokemons }) {
-  console.log('Array down below', pokemons)
-  console.log('Minimized array down below', pokemonsMinimized)
+  const [pokemonId, setPokemonId] = useState('')
+  const [modalActive, setModalActive] = useState(false)
+  const pokemonInfo = pokemons.filter(pokemon => pokemon.id === pokemonId)
+  const pokemonInfoToDisplay = pokemonInfo.map(
+    ({ id, name, sprites, types, height, weight, stats }) => {
+      return {
+        id,
+        name,
+        types,
+        height,
+        weight,
+        img: sprites?.other.dream_world.front_default,
+        hp: stats[0].base_stat,
+        atk: stats[1].base_stat,
+        def: stats[2].base_stat,
+        satk: stats[3].base_stat,
+        sdef: stats[4].base_stat,
+        spd: stats[5].base_stat,
+      }
+    }
+  )
   return (
     <>
-      <Text fontSize="40px" textAlign="center">
-        Pokemons
-      </Text>
+      <Wrapper>
+        <Container
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          gap="50px"
+          padding="0 0 30px"
+        >
+          <Text
+            fontSize="40px"
+            textAlign="center"
+            onClick={() => setModalActive(true)}
+          >
+            Pokemons
+          </Text>
+          <PokemonCardContainer
+            setActive={setModalActive}
+            setPokemon={setPokemonId}
+            pokeMinimized={pokemonsMinimized}
+          />
+        </Container>
+      </Wrapper>
+      {modalActive && (
+        <Modal setActive={setModalActive}>
+          <PokemonCard pokemonInfo={pokemonInfoToDisplay} />
+        </Modal>
+      )}
     </>
   )
 }

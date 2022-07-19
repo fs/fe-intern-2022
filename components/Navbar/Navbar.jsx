@@ -4,7 +4,15 @@ import Image from 'next/image'
 import Modal from '../Modal/Modal'
 
 import { Text } from 'styles/Typography/styles'
-import { Nav, Wrapper, Container, Button, CustomLink } from './styles'
+import {
+  Nav,
+  Wrapper,
+  Container,
+  Button,
+  CustomLink,
+  ModalContainer,
+  LinksContainer,
+} from './styles'
 
 import logo from 'public/img/logo.svg'
 
@@ -15,29 +23,19 @@ function Navbar() {
     <>
       {modalActive && (
         <Modal setActive={setModalActive}>
-          <Container
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            gap="15px"
-          >
-            <Text as="h4" fontSize="30px" fontWeight="bold" color="#fff">
+          <ModalContainer>
+            <Text as="h4" fontSize="30px" fontWeight="bold">
               Oops, seems like there is nothing here
             </Text>
-          </Container>
+          </ModalContainer>
         </Modal>
       )}
 
       <Nav className="navbar">
         <Wrapper>
-          <Container
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+          <Container>
             <Image src={logo} alt="logo" width={140} height={40} />
-            <Container display="flex" flexDirection="row" gap="32px">
+            <LinksContainer>
               <CustomLink href="/" animation>
                 Home
               </CustomLink>
@@ -47,7 +45,7 @@ function Navbar() {
               <CustomLink href="/" animation>
                 Game
               </CustomLink>
-            </Container>
+            </LinksContainer>
             <Container display="flex" flexDirection="row">
               <Button
                 backgroundColor="transparent"

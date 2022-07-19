@@ -2,10 +2,10 @@ import styled, { css } from 'styled-components'
 
 export const Text = styled.p(
   ({
-    fontSize,
+    fontSize = '12px',
     color,
-    fontWeight,
-    textAlign,
+    fontWeight = '400',
+    textAlign = 'right',
     margin,
     theme,
     lineHeight,
