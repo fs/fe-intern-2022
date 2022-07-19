@@ -1,0 +1,11 @@
+.pokemon {
+  animation: pokeAnim 1s infinite alternate;
+}
+@keyframes pokeAnim {
+  from {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
